@@ -1,4 +1,4 @@
-package com.fourseasons.hotel.utils;
+package com.fourseasons.hotel.utils.consts;
 
 /**
  * 结果对象状态码

@@ -3,16 +3,19 @@ package com.fourseasons.hotel.service.impl;
 import com.fourseasons.hotel.domain.entity.User;
 import com.fourseasons.hotel.domain.vo.UserVo;
 import com.fourseasons.hotel.mapper.UserMapper;
+import com.fourseasons.hotel.service.TokenService;
 import com.fourseasons.hotel.service.UserService;
 import com.fourseasons.hotel.utils.Result;
 import com.fourseasons.hotel.utils.Token;
+import com.fourseasons.hotel.utils.consts.DataBaseConst;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService,TokenService {
     @Resource
     private UserMapper userMapper;
 
@@ -24,16 +27,14 @@ public class UserServiceImpl implements UserService {
         if(userByName == null){return Result.loss();}
 
         if(passWord.equals(userByName.getUserPassword())){
-            Integer userId = userByName.getUserId();
-            long time = System.currentTimeMillis();
-            String format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
-            userMapper.updateLoginTimeById(userId,format);
-            userByName.setToken(Token.enToken(userByName.getUserId(), time));
+            // 设置token
+            userByName.setToken(getToken(userByName.getUserId()));
+            return Result.success(userByName);
+        }
+        else{
+            return Result.error();
         }
 
-        return passWord.equals(userByName.getUserPassword())?
-                Result.success(userByName):
-                Result.error();
     }
 
     @Override
@@ -50,5 +51,30 @@ public class UserServiceImpl implements UserService {
         else{
             return Result.error();
         }
+    }
+
+    @Override
+    public String getToken(int uid) {
+        String token = null;
+        // 当前时间
+        long time = System.currentTimeMillis();
+        // 转换成数据库识别格式
+        String format = new SimpleDateFormat(DataBaseConst.DATE_FORMAT).format(time);
+        // 修改字段值
+        int res = userMapper.updateLoginTimeById(uid, format);
+        // 生成token
+        if(res > 0){token = Token.enToken(uid, time);}
+
+        return token;
+    }
+
+    @Override
+    public boolean ckToken(String userName, String token){
+        // 通过用户名获取
+        UserVo userByName = userMapper.findUserByName(userName);
+        // 拿到加密条件
+        Date userLastLogin = userByName.getUserLastLogin();
+        String id = Token.deToken(token, userLastLogin.getTime());
+        return id.equals(userByName.getUserId().toString());
     }
 }

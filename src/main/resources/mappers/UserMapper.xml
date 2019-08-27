@@ -13,10 +13,14 @@
     <resultMap id="userMapVo" type="UserVo">
         <id property="userId" column="user_id" />
         <result property="userPassword" column="user_password" />
-        <result property="userLastLogin" jdbcType="TIMESTAMP" column="user_last_login" />
+        <result property="userLastLogin" column="user_last_login" />
     </resultMap>
 
     <select id="findUserByName" resultMap="userMapVo">
       SELECT `user_id`,`user_password`,`user_last_login` FROM `user` WHERE `user_name` = #{name}
     </select>
+
+    <update id="updateLoginTimeById">
+        UPDATE `user` SET `user_last_login` = #{time} WHERE `user_id` = #{uid}
+    </update>
 </mapper>

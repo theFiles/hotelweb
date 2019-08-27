@@ -1,5 +1,6 @@
 package com.fourseasons.hotel.utils;
 
+import com.fourseasons.hotel.utils.consts.ResultCode;
 import lombok.Data;
 
 import java.io.Serializable;

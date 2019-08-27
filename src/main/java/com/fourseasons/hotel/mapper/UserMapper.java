@@ -16,7 +16,7 @@ public interface UserMapper {
     /**
      * 通过id修改登录时间
      */
-    int updateLoginTimeById(@Param("uid") int uid,String time);
+    int updateLoginTimeById(@Param("uid") int uid,@Param("time") String time);
 
     /**
      * 通过用户对象新增一个用户
