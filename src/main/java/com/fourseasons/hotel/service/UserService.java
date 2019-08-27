@@ -6,7 +6,7 @@ import com.fourseasons.hotel.utils.Result;
 public interface UserService {
     Result login(String userName,String passWord);
 
-    Result logOut();
+    Result logout(int id);
 
     Result registered(User user);
 }

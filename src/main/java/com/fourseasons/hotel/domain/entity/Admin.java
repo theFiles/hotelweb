@@ -12,4 +12,5 @@ public class Admin implements Serializable {
     private String adminPassword;
     private Date adminLastLogin;
     private Date adminCreateTime;
+    private Integer adminStatus;
 }

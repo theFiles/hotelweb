@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fourseasons.hotel.mapper.UserMapper">
+    <sql id="table">`t_user`</sql>
+
     <resultMap id="userMap" type="UserVo">
         <id property="userId" column="user_id" />
         <result property="userName" column="user_name" />
         <result property="userPassword" column="user_password" />
         <result property="userCreateTime" column="user_create_time" />
         <result property="userLastLogin" column="user_last_login" />
+        <result property="userStatus" column="user_status" />
     </resultMap>
     
     <resultMap id="userMapVo" type="UserVo">
@@ -17,10 +20,23 @@
     </resultMap>
 
     <select id="findUserByName" resultMap="userMapVo">
-      SELECT `user_id`,`user_password`,`user_last_login` FROM `user` WHERE `user_name` = #{name}
+      SELECT `user_id`,`user_password`,`user_last_login` FROM <include refid="table" /> WHERE `user_name` = #{name} AND `user_status` = ${status}
     </select>
 
     <update id="updateLoginTimeById">
-        UPDATE `user` SET `user_last_login` = #{time} WHERE `user_id` = #{uid}
+        UPDATE <include refid="table" /> SET `user_last_login` = #{time} WHERE `user_id` = #{uid}
     </update>
+
+    <insert id="insertUser">
+        INSERT INTO <include refid="table" /> (`user_name`,`user_password`) VALUES (#{user.userName},#{user.userPassword})
+    </insert>
+
+    <select id="findUsers" resultMap="userMap">
+        SELECT * FROM <include refid="table" />
+        <if test="search != null and search != ''">
+            `user_name` = #{search}
+        </if>
+        ORDER BY `user_create_time`
+        LIMIT #{num},#{size}
+    </select>
 </mapper>

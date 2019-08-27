@@ -12,34 +12,50 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ResourceBundle;
 
+/**
+ * 用户逻辑
+ * @author lidaye
+ */
 @Service
 public class UserServiceImpl implements UserService,TokenService {
     @Resource
     private UserMapper userMapper;
 
     @Override
-    public Result login(String userName, String passWord) {
-        UserVo userByName = userMapper.findUserByName(userName);
+    public Result login(String name, String pwd) {
+        // 通过名字拿到数据
+        UserVo user = userMapper.findUserByName(name,1);
 
-        // 如果找不到，返回数据错误
-        if(userByName == null){return Result.loss();}
+        // 报错：用户不存在
+        if(user == null){return Result.loss();}
 
-        if(passWord.equals(userByName.getUserPassword())){
-            // 设置token
-            userByName.setToken(getToken(userByName.getUserId()));
-            return Result.success(userByName);
+        // 比较密码
+        if(pwd.equals(user.getUserPassword())){
+            // 生成token
+            user.setToken(getToken(user.getUserId()));
+            return Result.success(user);
         }
         else{
+            // 报错：密码有误
             return Result.error();
         }
 
     }
 
     @Override
-    public Result logOut() {
-        return null;
+    public Result logout(int id) {
+        // 修改最后登录时间（token失效）
+        int res = resetLastTime(
+                id,
+                new SimpleDateFormat(DataBaseConst.DATE_FORMAT).format(
+                        System.currentTimeMillis()
+                )
+        );
+        return res > 0 ?
+                Result.success(null):
+                Result.error();
     }
 
     @Override
@@ -54,27 +70,27 @@ public class UserServiceImpl implements UserService,TokenService {
     }
 
     @Override
-    public String getToken(int uid) {
-        String token = null;
-        // 当前时间
-        long time = System.currentTimeMillis();
-        // 转换成数据库识别格式
-        String format = new SimpleDateFormat(DataBaseConst.DATE_FORMAT).format(time);
-        // 修改字段值
-        int res = userMapper.updateLoginTimeById(uid, format);
-        // 生成token
-        if(res > 0){token = Token.enToken(uid, time);}
-
-        return token;
+    public int resetLastTime(int uid, String format) {
+        return userMapper.updateLoginTimeById(uid, format);
     }
 
     @Override
     public boolean ckToken(String userName, String token){
+        // 从配置中取最大时间差
+        ResourceBundle tokenConfig = ResourceBundle.getBundle("token");
+        long userMaxTime = Long.parseLong(tokenConfig.getString("tk.userMaxTime"));
+
         // 通过用户名获取
-        UserVo userByName = userMapper.findUserByName(userName);
+        UserVo userByName = userMapper.findUserByName(userName,1);
         // 拿到加密条件
-        Date userLastLogin = userByName.getUserLastLogin();
-        String id = Token.deToken(token, userLastLogin.getTime());
-        return id.equals(userByName.getUserId().toString());
+        long time = userByName.getUserLastLogin().getTime();
+
+        // 是否超过时间差
+        if(System.currentTimeMillis()-time < userMaxTime){
+            String id = Token.deToken(token, time);
+            return id.equals(userByName.getUserId().toString());
+        }
+
+        return false;
     }
 }

@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+/**
+ * @author lidaye
+ */
 @RestController
 @RequestMapping("/User")
 public class UserController {
@@ -15,13 +18,13 @@ public class UserController {
 
     /**
      * 登录
-     * @param userName      用户名
-     * @param passWord      密码
+     * @param name          用户名
+     * @param pwd           密码
      * @return              Result结果对象
      */
-    @GetMapping(value = "/Login", params = {"userName","passWord"})
-    public Result login(String userName,String passWord){
-        return userService.login(userName, passWord);
+    @GetMapping(value = "/Login", params = {"name","pwd"})
+    public Result login(String name,String pwd){
+        return userService.login(name, pwd);
     }
 
     /**
@@ -30,8 +33,8 @@ public class UserController {
      * @return          Result结果对象
      */
     @PostMapping("/Registered")
-                    public Result registered(@RequestBody User user){
-        return null;
+    public Result registered(@RequestBody User user){
+        return userService.registered(user);
     }
 
     /**
@@ -39,7 +42,7 @@ public class UserController {
      * @return          退出登录
      */
     @GetMapping("/Logout")
-    public Result logout(){
-        return null;
+    public Result logout(@RequestParam int id){
+        return userService.logout(id);
     }
 }
