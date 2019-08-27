@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fourseasons.hotel.mapper.TRoomMapper">
+
+
+    <resultMap id="TRoom_ResultMap" type="com.fourseasons.hotel.domain.vo.TRoomVo">
+        <id property="roomId"  column="room_Id" />
+        <result property="roomNum" column="room_Num"/>
+        <result property="roomPrice" column="room_Price"/>
+        <result property="roomCreateTime" column="room_Create_Time"/>
+        <result property="roomStatus" column="room_Status"/>
+        <result property="roomTypeId" column="room_Type_Id"/>
+        <result property="orderId" column="order_Id"/>
+        <result property="adminId" column="admin_Id"/>
+        <collection property="tRoomTypeList" ofType="com.fourseasons.hotel.domain.entity.TRoomType">
+            <id property="roomTypeId" column="room_Type_Id"/>
+            <result property="roomTypeDescribe" column="room_Type_Describe"/>
+            <result property="roomTypePrice" column="room_Type_Price"/>
+            <result property="roomTypeStatus" column="room_Type_Status"/>
+        </collection>
+    </resultMap>
+    <select id="findAllRooms"  resultMap="TRoom_ResultMap">
+        SELECT *
+        FROM t_room TR LEFT JOIN t_room_type TRT ON  TR.room_Type_Id = TRT.room_Type_Id
+    </select>
+
+    <select id="findByroomId" resultMap="TRoom_ResultMap">
+        SELECT *
+        FROM t_room TR LEFT JOIN t_room_type TRT ON TR.room_Type_Id = TRT.room_Type_Id
+        WHERE TR.room_id=#{roomId};
+    </select>
+    <select id="findByKeyword" resultType="com.fourseasons.hotel.domain.entity.TRoom">
+        SELECT *
+        FROM t_room TR LEFT JOIN t_room_type TRT ON TR.room_Type_Id = TRT.room_Type_Id
+<!--        WHERE s.name LIKE concat(concat('%' , #{kw}),'%') OR s.sub_title LIKE concat(concat('%' , #{kw}),'%')-->
+        WHERE  TRT.room_type_describe LIKE concat(concat('%' , #{keyword}),'%')
+    </select>
+
+</mapper>
