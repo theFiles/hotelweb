@@ -17,4 +17,9 @@ public interface TRoomMapper {
     List<TRoomVo> findByroomId(@Param("roomId") Integer roomId);
 
     List<TRoom> findByKeyword(@Param("keyword") String keyword);
+<<<<<<< Updated upstream
+=======
+
+    List<TRoom> findTRoomOrder();
+>>>>>>> Stashed changes
 }

@@ -10,7 +10,11 @@ public class TCompany {
     /**
      *
      */
+<<<<<<< Updated upstream
     private Integer companyId;
+=======
+    private Integer companyid;
+>>>>>>> Stashed changes
 
     /**
      *

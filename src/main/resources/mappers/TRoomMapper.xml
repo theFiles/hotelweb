@@ -18,7 +18,23 @@
             <result property="roomTypePrice" column="room_Type_Price"/>
             <result property="roomTypeStatus" column="room_Type_Status"/>
         </collection>
+<<<<<<< Updated upstream
     </resultMap>
+=======
+
+    </resultMap>
+    <resultMap id="TRoom_ResultMap1" type="com.fourseasons.hotel.domain.vo.TRoomVo">
+    <id property="roomId"  column="room_Id" />
+    <result property="roomNum" column="room_Num"/>
+    <result property="roomPrice" column="room_Price"/>
+    <result property="roomCreateTime" column="room_Create_Time"/>
+    <result property="roomStatus" column="room_Status"/>
+    <result property="roomTypeId" column="room_Type_Id"/>
+    <result property="orderId" column="order_Id"/>
+    <result property="adminId" column="admin_Id"/>
+    </resultMap>
+
+>>>>>>> Stashed changes
     <select id="findAllRooms"  resultMap="TRoom_ResultMap">
         SELECT *
         FROM t_room TR LEFT JOIN t_room_type TRT ON  TR.room_Type_Id = TRT.room_Type_Id
@@ -29,11 +45,23 @@
         FROM t_room TR LEFT JOIN t_room_type TRT ON TR.room_Type_Id = TRT.room_Type_Id
         WHERE TR.room_id=#{roomId};
     </select>
+<<<<<<< Updated upstream
     <select id="findByKeyword" resultType="com.fourseasons.hotel.domain.entity.TRoom">
         SELECT *
         FROM t_room TR LEFT JOIN t_room_type TRT ON TR.room_Type_Id = TRT.room_Type_Id
 <!--        WHERE s.name LIKE concat(concat('%' , #{kw}),'%') OR s.sub_title LIKE concat(concat('%' , #{kw}),'%')-->
         WHERE  TRT.room_type_describe LIKE concat(concat('%' , #{keyword}),'%')
     </select>
+=======
+    <select id="findByKeyword" resultMap="TRoom_ResultMap">
+        SELECT *
+        FROM t_room TR LEFT JOIN t_room_type TRT ON TR.room_Type_Id = TRT.room_Type_Id
+        WHERE  TRT.room_type_describe LIKE concat(concat('%' , #{keyword}),'%')
+    </select>
+    <select id="findTRoomOrder" resultMap="TRoom_ResultMap1">
+        SELECT TR.order_id,TR.room_status
+        FROM t_room TR
+    </select>
+>>>>>>> Stashed changes
 
 </mapper>
