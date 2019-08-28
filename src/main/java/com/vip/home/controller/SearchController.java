@@ -1,6 +1,7 @@
 package com.vip.home.controller;
 
 
+import com.vip.home.domain.entity.TRoomType;
 import com.vip.home.domain.vo.TRoomVo;
 import com.vip.home.service.SearchService;
 import com.vip.home.utils.Result;
@@ -26,4 +27,6 @@ public class SearchController {
             return  Result.error();
         }
     }
+
+
 }

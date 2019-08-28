@@ -1,6 +1,7 @@
 package com.vip.home.service.impl;
 
 import com.vip.home.domain.entity.TCompany;
+import com.vip.home.domain.entity.TRoomType;
 import com.vip.home.domain.vo.TRoomTypeVo;
 import com.vip.home.mapper.TCompanyMapper;
 import com.vip.home.mapper.TRoomTypeMapper;
@@ -22,6 +23,7 @@ public class IndexServiceImpl implements IndexService {
     TRoomTypeMapper tRoomTypeMapper;
 
 
+
     @Override
     public HomePage getHomePage() {
         HomePage homePage = new HomePage();
@@ -36,6 +38,12 @@ public class IndexServiceImpl implements IndexService {
     public List<TRoomTypeVo> getContent() {
         List<TRoomTypeVo> all = tRoomTypeMapper.findAll();
         return  all;
+    }
+
+    @Override
+    public List<TRoomType> getRoomType() {
+        List<TRoomType> byType = tRoomTypeMapper.findByType();
+        return byType;
     }
 
 

@@ -1,5 +1,6 @@
 package com.vip.home.controller;
 
+import com.vip.home.domain.entity.TRoomType;
 import com.vip.home.domain.vo.TRoomTypeVo;
 import com.vip.home.service.IndexService;
 import com.vip.home.utils.HomePage;
@@ -40,6 +41,16 @@ public class IndexController {
         }catch (Exception e){
             return Result.error();
         }
+
+    }
+
+    @GetMapping("/type")
+    public Result getContentType(){
+try{ List<TRoomType> roomType = indexService.getRoomType();
+    return Result.success(roomType);
+}catch (Exception e){
+    return Result.error();
+}
 
     }
 }

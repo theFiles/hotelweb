@@ -8,8 +8,8 @@ import java.util.List;
 public interface TCompanyMapper {
    List<TCompany> findTCompany ();
 
-   List<TCompany>  insertTcompany(@Param("companyId") int companyId,
-                                  @Param("companyName") String companyName,
+   int updateTcompany(
+
                                   @Param("companyLogo") String companyLogo,
                                   @Param("companyDescribe") String companyDescribe,
                                   @Param("companyAddress") String companyAddress,

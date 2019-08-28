@@ -1,6 +1,7 @@
 package com.vip.home.utils;
 
 import com.vip.home.domain.entity.TCompany;
+import com.vip.home.domain.entity.TRoomType;
 import com.vip.home.domain.vo.TRoomTypeVo;
 import lombok.Data;
 
@@ -16,4 +17,6 @@ public class HomePage implements Serializable {
 
     List<TRoomTypeVo> tRoomTypeVos;
 
+
+    List <TRoomType> tRoomTypes;
 }
