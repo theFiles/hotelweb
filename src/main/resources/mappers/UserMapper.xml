@@ -33,9 +33,11 @@
 
     <select id="findUsers" resultMap="userMap">
         SELECT * FROM <include refid="table" />
-        <if test="search != null and search != ''">
-            `user_name` = #{search}
-        </if>
+        <trim prefix="WHERE">
+            <if test="search != null and search != ''">
+                `user_name` LIKE CONCAT('%',#{search},'%')
+            </if>
+        </trim>
         ORDER BY `user_create_time`
         LIMIT #{num},#{size}
     </select>

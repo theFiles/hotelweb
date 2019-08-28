@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * 管理员逻辑
@@ -41,6 +40,11 @@ public class AdminServiceImpl implements AdminService,TokenService {
         if(pwd.equals(admin.getAdminPassword())){
             // 生成token
             admin.setToken(getToken(admin.getAdminId()));
+            // 整理数据输出内容
+            admin.setAdminId(null);
+            admin.setAdminPassword(null);
+            admin.setAdminLastLogin(null);
+            admin.setAdminName(name);
             return Result.success(admin);
         }
         else{
@@ -107,20 +111,22 @@ public class AdminServiceImpl implements AdminService,TokenService {
 
     @Override
     public boolean ckToken(String name, String token) {
-        // 从配置中取最大时间差
-        long userMaxTime = Long.parseLong(PropertiesTool.param(token,"tk.adminMaxTime"));
 
-        // 通过用户名获取
-        AdminVo admin = adminMapper.findAdminByName(name,1);
-        // 拿到加密条件
-        long time = admin.getAdminLastLogin().getTime();
+        if(name != null && token != null) {
+            // 从配置中取最大时间差
+            long userMaxTime = Long.parseLong(PropertiesTool.param("token", "tk.adminMaxTime"));
 
-        // 是否超过时间差
-        if(System.currentTimeMillis()-time < userMaxTime){
-            String id = Token.deToken(token, time);
-            return id.equals(admin.getAdminId().toString());
+            // 通过用户名获取
+            AdminVo admin = adminMapper.findAdminByName(name, 1);
+            // 拿到加密条件
+            long time = admin.getAdminLastLogin().getTime();
+
+            // 是否超过时间差
+            if (System.currentTimeMillis() - time < userMaxTime) {
+                String id = Token.deToken(token, time);
+                return id.equals(admin.getAdminId().toString());
+            }
         }
-
         return false;
     }
 }

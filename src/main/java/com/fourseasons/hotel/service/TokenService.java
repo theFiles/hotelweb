@@ -1,6 +1,5 @@
 package com.fourseasons.hotel.service;
 
-import com.fourseasons.hotel.domain.entity.User;
 import com.fourseasons.hotel.utils.Token;
 import com.fourseasons.hotel.utils.consts.DataBaseConst;
 

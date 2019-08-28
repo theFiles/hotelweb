@@ -1,8 +1,5 @@
 package com.fourseasons.hotel.utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Arrays;
@@ -25,10 +22,8 @@ public class AES {
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
         byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
-
         //此处使用BASE64做转码功能，同时能起到2次加密的作用。
-        return new BASE64Encoder().encode(encrypted);
-//        return new Base64().encodeToString(encrypted);
+        return Base64Tool.encode(encrypted);
     }
 
     public static String decrypt(String sSrc, String sKey) throws Exception {
@@ -47,7 +42,7 @@ public class AES {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec);
             //先用base64解密
-            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(sSrc);
+            byte[] encrypted1 = Base64Tool.decodeToByte(sSrc);
             try {
                 byte[] original = cipher.doFinal(encrypted1);
                 String originalString = new String(original,"utf-8");

@@ -1,7 +1,9 @@
 package com.fourseasons.hotel.controller;
 
 import com.fourseasons.hotel.domain.entity.Admin;
+import com.fourseasons.hotel.domain.vo.AdminVo;
 import com.fourseasons.hotel.service.AdminService;
+import com.fourseasons.hotel.service.TokenService;
 import com.fourseasons.hotel.utils.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,19 @@ import javax.annotation.Resource;
 public class AdminController {
     @Resource
     private AdminService adminService;
+
+    @ModelAttribute("root")
+    public boolean ckroot(String name,String token){
+        // token检测
+        return ((TokenService)adminService).ckToken(name,token);
+    }
+
+    @GetMapping("/checkRoot")
+    public Result checkRoot(@ModelAttribute("root") boolean root){
+        return root?
+                Result.success(null):
+                Result.error();
+    }
 
     /**
      * 登录
@@ -56,9 +71,21 @@ public class AdminController {
         return adminService.delAdmin(id);
     }
 
-    @GetMapping("/SearchUsers/{page}")
-    public Result searchUsers(String search,@PathVariable int page){
-        return adminService.getUsers(search,page);
+    /**
+     * 查看用户列表
+     * @param search        查询关键字
+     * @param page
+     * @return
+     */
+    @GetMapping("/SearchUsers/{page}/{search}")
+    public Result searchUsers(
+            @PathVariable String search,
+            @PathVariable int page,
+            @ModelAttribute("root") boolean root
+    ){
+        return root?
+                adminService.getUsers(search,page):
+                Result.loss();
     }
 
 }

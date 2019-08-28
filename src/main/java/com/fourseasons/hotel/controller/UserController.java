@@ -45,4 +45,14 @@ public class UserController {
     public Result logout(@RequestParam int id){
         return userService.logout(id);
     }
+
+    /**
+     * 用户详情
+     * @param id        用户id
+     * @return          有用户信息的结果对象
+     */
+    @GetMapping("/UserInfo")
+    public Result userInfo(@RequestParam int id){
+        return null;
+    }
 }

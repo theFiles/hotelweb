@@ -5,6 +5,7 @@ import com.fourseasons.hotel.domain.vo.UserVo;
 import com.fourseasons.hotel.mapper.UserMapper;
 import com.fourseasons.hotel.service.TokenService;
 import com.fourseasons.hotel.service.UserService;
+import com.fourseasons.hotel.utils.PropertiesTool;
 import com.fourseasons.hotel.utils.Result;
 import com.fourseasons.hotel.utils.Token;
 import com.fourseasons.hotel.utils.consts.DataBaseConst;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.ResourceBundle;
 
 /**
  * 用户逻辑
@@ -76,21 +76,22 @@ public class UserServiceImpl implements UserService,TokenService {
 
     @Override
     public boolean ckToken(String userName, String token){
-        // 从配置中取最大时间差
-        ResourceBundle tokenConfig = ResourceBundle.getBundle("token");
-        long userMaxTime = Long.parseLong(tokenConfig.getString("tk.userMaxTime"));
+        if(userName != null && token != null) {
 
-        // 通过用户名获取
-        UserVo userByName = userMapper.findUserByName(userName,1);
-        // 拿到加密条件
-        long time = userByName.getUserLastLogin().getTime();
+            // 从配置中取最大时间差
+            long userMaxTime = Long.parseLong(PropertiesTool.param("token", "tk.userMaxTime"));
 
-        // 是否超过时间差
-        if(System.currentTimeMillis()-time < userMaxTime){
-            String id = Token.deToken(token, time);
-            return id.equals(userByName.getUserId().toString());
+            // 通过用户名获取
+            UserVo userByName = userMapper.findUserByName(userName, 1);
+            // 拿到加密条件
+            long time = userByName.getUserLastLogin().getTime();
+
+            // 是否超过时间差
+            if (System.currentTimeMillis() - time < userMaxTime) {
+                String id = Token.deToken(token, time);
+                return id.equals(userByName.getUserId().toString());
+            }
         }
-
         return false;
     }
 }

@@ -1,5 +1,7 @@
 package com.fourseasons.hotel.utils;
 
+import com.fourseasons.hotel.utils.consts.ConfigConst;
+
 import java.util.ResourceBundle;
 
 /**
@@ -14,7 +16,7 @@ public class PropertiesTool {
      * @return          配置值字符串
      */
     public static String param(String name,String key){
-        ResourceBundle tokenConfig = ResourceBundle.getBundle(name);
+        ResourceBundle tokenConfig = ResourceBundle.getBundle(ConfigConst.PROPERTIES_PATH+name);
         return tokenConfig.getString(key);
     }
 
@@ -25,7 +27,7 @@ public class PropertiesTool {
      * @return          配置值数组
      */
     public static String[] param(String name,String... key){
-        ResourceBundle tokenConfig = ResourceBundle.getBundle(name);
+        ResourceBundle tokenConfig = ResourceBundle.getBundle(ConfigConst.PROPERTIES_PATH+name);
         int len = key.length;
         for (int i = 0; i < len; i++) {
             key[i] = tokenConfig.getString(key[i]);
