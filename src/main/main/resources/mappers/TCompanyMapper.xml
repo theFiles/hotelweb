@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.home.mapper.TCompanyMapper">
+  <resultMap id="BaseResultMap" type="com.vip.home.domain.entity.TCompany">
+    <!--@mbg.generated-->
+    <id column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="company_describe" jdbcType="VARCHAR" property="companyDescribe" />
+    <result column="company_address" jdbcType="VARCHAR" property="companyAddress" />
+    <result column="company_hotline" jdbcType="VARCHAR" property="companyHotline" />
+    <result column="company_logo" jdbcType="VARCHAR" property="companyLogo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    company_id, company_name, company_describe, company_address, company_hotline, company_logo
+  </sql>
+
+    <select id="findTCompany" resultMap="BaseResultMap">
+
+    select *
+    from t_company
+  </select>
+  <update id="updateTcompany">
+    update t_company
+    set
+
+    company_logo=#{companyLogo},
+    company_hotline=#{companyHotline},
+    company_address=#{companyAddress},
+    company_describe=#{companyDescribe}
+    where company_id=2
+  </update>
+
+</mapper>
