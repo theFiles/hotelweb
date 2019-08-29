@@ -10,6 +10,7 @@ public class User implements Serializable {
     private Integer userId;
     private String userName;
     private String userPassword;
+    private String userPhone;
     private Date userLastLogin;
     private Date userCreateTime;
     private Integer userStatus;

@@ -70,6 +70,14 @@ public class UserServiceImpl implements UserService,TokenService {
     }
 
     @Override
+    public Result getUserInfo(int uid) {
+        User userById = userMapper.findUserById(uid);
+        return userById != null?
+                Result.success(userById):
+                Result.error();
+    }
+
+    @Override
     public int resetLastTime(int uid, String format) {
         return userMapper.updateLoginTimeById(uid, format);
     }

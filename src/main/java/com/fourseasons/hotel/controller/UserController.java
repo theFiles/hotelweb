@@ -53,6 +53,6 @@ public class UserController {
      */
     @GetMapping("/UserInfo")
     public Result userInfo(@RequestParam int id){
-        return null;
+        return userService.getUserInfo(id);
     }
 }

@@ -4,6 +4,8 @@ import com.fourseasons.hotel.domain.entity.Admin;
 import com.fourseasons.hotel.domain.vo.AdminVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface AdminMapper {
     /**
      * 通过
@@ -33,4 +35,17 @@ public interface AdminMapper {
      * @return          影响的数据行数
      */
     int deleteAdmin(@Param("aid") int aid);
+
+    /**
+     * 获取多个管理员
+     * @param search        查询关键字
+     * @param num           起始查询位置
+     * @param size          查询量
+     * @return              多个管理员对象
+     */
+    List<Admin> findAdminAll(
+            @Param("search") String search,
+            @Param("num") int num,
+            @Param("size") int size
+    );
 }

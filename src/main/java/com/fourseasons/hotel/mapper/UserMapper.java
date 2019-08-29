@@ -8,8 +8,14 @@ import java.util.List;
 
 public interface UserMapper {
     /**
+     * 通过id获取用户信息
+     * @param uid       用户id
+     * @return          用户对象
+     */
+    User findUserById(@Param("uid") int uid);
+
+    /**
      * 通过名称获取用户信息
-     *
      * @param name 用户名
      * @return 用户对象
      */

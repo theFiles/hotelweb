@@ -68,7 +68,11 @@ public class AdminServiceImpl implements AdminService,TokenService {
     }
 
     @Override
-    public Result addAdmin(Admin admin) {
+    public Result addAdmin(String name,String pwd) {
+        Admin admin = new Admin();
+        admin.setAdminName(name);
+        admin.setAdminPassword(pwd);
+
         int res = adminMapper.insertAdmin(admin);
         return res > 0 ?
                 Result.success(null):
@@ -84,12 +88,30 @@ public class AdminServiceImpl implements AdminService,TokenService {
     }
 
     @Override
+    public Result getUserInfo(int uid) {
+        User user = userMapper.findUserById(uid);
+        return user != null?
+                Result.success(user):
+                Result.error();
+    }
+
+    @Override
     public Result getUsers(String search, int page) {
         int size = Integer.parseInt(PropertiesTool.param("db","db.findUsersSize"));
         int startNum = (page-1)*size;
         List<User> users = userMapper.findUsers(search,startNum,size);
         return users != null ?
                 Result.success(users):
+                Result.error();
+    }
+
+    @Override
+    public Result getAdmins(String search, int page) {
+        int size = Integer.parseInt(PropertiesTool.param("db","db.findUsersSize"));
+        int startNum = (page-1)*size;
+        List<Admin> admins = adminMapper.findAdminAll(search,startNum,size);
+        return admins != null ?
+                Result.success(admins):
                 Result.error();
     }
 

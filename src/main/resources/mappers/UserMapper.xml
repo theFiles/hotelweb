@@ -11,6 +11,7 @@
         <result property="userCreateTime" column="user_create_time" />
         <result property="userLastLogin" column="user_last_login" />
         <result property="userStatus" column="user_status" />
+        <result property="userPhone" column="user_phone" />
     </resultMap>
     
     <resultMap id="userMapVo" type="UserVo">
@@ -18,6 +19,10 @@
         <result property="userPassword" column="user_password" />
         <result property="userLastLogin" column="user_last_login" />
     </resultMap>
+
+    <select id="findUserById" resultMap="userMap">
+        SELECT * FROM <include refid="table" /> WHERE `user_id` = #{uid}
+    </select>
 
     <select id="findUserByName" resultMap="userMapVo">
       SELECT `user_id`,`user_password`,`user_last_login` FROM <include refid="table" /> WHERE `user_name` = #{name} AND `user_status` = ${status}
@@ -38,7 +43,7 @@
                 `user_name` LIKE CONCAT('%',#{search},'%')
             </if>
         </trim>
-        ORDER BY `user_create_time`
+        ORDER BY `user_create_time` DESC
         LIMIT #{num},#{size}
     </select>
 </mapper>

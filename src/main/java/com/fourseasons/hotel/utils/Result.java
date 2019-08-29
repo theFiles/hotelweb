@@ -40,6 +40,14 @@ public class Result implements Serializable {
     }
 
     /**
+     * 无权限
+     * @return      结果对象（UNROOT_CODE）
+     */
+    public static Result root(){
+        return newResult(null,ResultCode.UNROOT_CODE);
+    }
+
+    /**
      * 获取结果集对象
      * @param res       结果内容
      * @param code      结果状态码
