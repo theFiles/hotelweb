@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author yuzhi
  */
-@Service("roomSystemService")
+@Service
 public class RoomSystemServiceImpl implements RoomSystemService {
     @Resource
     TRoomTypeMapper tRoomTypeMapper;

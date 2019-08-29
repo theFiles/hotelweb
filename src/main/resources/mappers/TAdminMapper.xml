@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fourseasons.hotel.mapper.TAdminMapper">
+
+    <resultMap id="TAdmin_ResultMap" type="com.fourseasons.hotel.domain.entity.TAdmin">
+        <id property="adminId"  column="admin_Id" />
+        <result property="adminName" column="admin_Name"/>
+        <result property="adminPassword" column="admin_Password"/>
+        <result property="adminCreateTime" column="admin_CreateTime"/>
+        <result property="adminStatus" column="admin_Status"/>
+    </resultMap>
+    <select id="findTAdminByName" resultMap="TAdmin_ResultMap">
+        SELECT TA.admin_name,TA.admin_password
+        FROM t_admin TA
+        WHERE TA.admin_name=#{name} AND TA.admin_password=#{pwd};
+    </select>
 </mapper>

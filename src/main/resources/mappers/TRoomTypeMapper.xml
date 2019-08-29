@@ -4,10 +4,7 @@
 
     <resultMap id="TRoomType_ResultMap" type="com.fourseasons.hotel.domain.vo.TRoomTypeVo">
         <id property="roomTypeId"  column="room_Type_Id" />
-<<<<<<< Updated upstream
-=======
         <result property="roomTypeName" column="room_type_name"/>
->>>>>>> Stashed changes
         <result property="roomTypeDescribe" column="room_Type_Describe"/>
         <result property="roomTypePrice" column="room_Type_Price"/>
         <result property="roomTypeStatus" column="room_Type_Status"/>
@@ -19,8 +16,6 @@
             <result property="adminId" column="admin_Id" />
         </collection>
     </resultMap>
-<<<<<<< Updated upstream
-=======
 
     <resultMap id="TRoomType_ResultMap1" type="com.fourseasons.hotel.domain.vo.TRoomTypeVo">
         <id property="roomTypeId"  column="room_Type_Id" />
@@ -30,18 +25,14 @@
         <result property="roomTypeStatus" column="room_Type_Status"/>
     </resultMap>
 
->>>>>>> Stashed changes
     <select id="findByRoomTypeId" resultMap="TRoomType_ResultMap">
         SELECT *
         FROM t_room_type TRT LEFT JOIN t_room TR ON TRT.room_Type_Id = TR.room_Type_Id
     </select>
-<<<<<<< Updated upstream
-=======
     <select id="findTRoomType" resultMap="TRoomType_ResultMap1">
         SELECT TRT.room_type_id,TRT.room_type_name,TRT.room_type_describe,TRT.room_type_price
         FROM t_room_type TRT
     </select>
->>>>>>> Stashed changes
 
 
 </mapper>

@@ -8,7 +8,7 @@ import java.util.Date;
  * @author yuzhi
  */
 @Data
-public class TUser {
+public class TUser  {
     /**
      *
      */

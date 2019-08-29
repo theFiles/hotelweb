@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author yuzhi
  */
-@Service("indexService")
+@Service
 public class IndexServiceImpl implements IndexService {
     @Resource
     TRoomTypeMapper tRoomTypeMapper;

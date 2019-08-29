@@ -16,7 +16,7 @@ import java.util.List;
  * @author yuzhi
  */
 @RestController
-@RequestMapping("/api/v2")
+@RequestMapping(value ="/api/v2")
 public class RoomSystemController {
     @Resource
     RoomSystemService roomsystemService;
@@ -25,7 +25,7 @@ public class RoomSystemController {
      *按类型查询显示房间信息
      */
 
-    @RequestMapping("/contents")
+    @RequestMapping(value ="/contents")
     public Result getContentData(){
         try {
             List<TRoomTypeVo> tRoomTypeVoList= roomsystemService.getContent();
@@ -39,7 +39,7 @@ public class RoomSystemController {
      *获取所有房间信息
      */
 
-    @RequestMapping("/all")
+    @RequestMapping(value ="/all")
     public Result getAllRoomsData(){
         try {
             List<TRoomVo> tRoomVoList= roomsystemService.getAllRooms();
@@ -53,7 +53,7 @@ public class RoomSystemController {
      * 房间详情页
      */
 
-    @RequestMapping("/details")
+    @RequestMapping(value ="/details")
     public Result getRoomDeatils(Integer roomId){
         try {
             List<TRoomVo> roomDeatils= roomsystemService.getRoomDeatils(roomId);
@@ -61,13 +61,14 @@ public class RoomSystemController {
         } catch (Exception e) {
             return Result.error();
         }
+
     }
 
     /**
      *搜索条件查询房间信息
      */
 
-    @RequestMapping("/search")
+    @RequestMapping(value ="/search")
     public Result<List<TRoom>> search(String keyword){
         try {
             List<TRoom> search = roomsystemService.search(keyword);

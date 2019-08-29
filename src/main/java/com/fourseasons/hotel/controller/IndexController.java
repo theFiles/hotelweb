@@ -22,7 +22,7 @@ public class IndexController {
      *首页显示（房间类型、酒店信息、房间预订情况）
      */
 
-    @GetMapping("index")
+    @GetMapping(value ="index")
     public Result getIndexData() {
         try {
             CateBean cateBean = indexService.getIndexData();

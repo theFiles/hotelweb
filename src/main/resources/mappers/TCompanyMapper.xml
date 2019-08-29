@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fourseasons.hotel.mapper.TCompanyMapper">
-<<<<<<< Updated upstream
-=======
 
     <resultMap id="TCompany_ResultMap" type="com.fourseasons.hotel.domain.entity.TCompany">
         <id property="companyid"  column="company_id" />
@@ -16,5 +14,4 @@
         SELECT TC.company_id,TC.company_name,TC.company_address,TC.company_describe,TC.company_hotline,TC.company_logo
         FROM t_company TC
     </select>
->>>>>>> Stashed changes
 </mapper>

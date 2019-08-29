@@ -1,9 +1,6 @@
 package com.fourseasons.hotel.mapper;
 
-<<<<<<< Updated upstream
-=======
 import com.fourseasons.hotel.domain.entity.TRoomType;
->>>>>>> Stashed changes
 import com.fourseasons.hotel.domain.vo.TRoomTypeVo;
 
 import java.util.List;
@@ -13,9 +10,6 @@ import java.util.List;
  */
 public interface TRoomTypeMapper {
     List<TRoomTypeVo> findByRoomTypeId();
-<<<<<<< Updated upstream
-=======
 
     List<TRoomType> findTRoomType();
->>>>>>> Stashed changes
 }
